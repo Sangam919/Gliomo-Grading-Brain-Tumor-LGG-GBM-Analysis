@@ -1,5 +1,4 @@
  Project Title: Glioma Grading Clinical and Mutation Features
-🧑‍🏫 Under the guidance of Dr. Manpreet Singh Sehgal
 
 I'm excited to share insights from my latest project where I explored how clinical features and gene mutation profiles impact the grading of Glioma—a type of brain tumor that includes both GBM (Glioblastoma Multiforme) and LGG (Low-Grade Glioma).
 🧠 Key Highlights:
