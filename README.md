@@ -8,6 +8,6 @@ I'm excited to share insights from my latest project where I explored how clinic
 🔥 Built correlation heatmaps, co-mutation maps, and used Random Forest to identify feature importance
 🧾 Derived insights such as:
 GBM patients tend to be older than LGG
-IDH1 mutation is highly associated with LGG
+IDH1 mutation is highly associated with LGG 
 Gene mutation frequency helps distinguish between GBM and LGG grades
 This project has not only strengthened my skills in Python, Pandas, Seaborn, Matplotlib, and Scikit-learn, but also deepened my understanding of how data science can contribute to medical research. 📈❤️‍🧬
