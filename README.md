@@ -11,3 +11,4 @@ GBM patients tend to be older than LGG
 IDH1 mutation is highly associated with LGG 
 Gene mutation frequency helps distinguish between GBM and LGG grades
 This project has not only strengthened my skills in Python, Pandas, Seaborn, Matplotlib, and Scikit-learn, but also deepened my understanding of how data science can contribute to medical research. 📈❤️‍🧬
+   
