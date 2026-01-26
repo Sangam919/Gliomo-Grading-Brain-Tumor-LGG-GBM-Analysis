@@ -8,12 +8,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-file_path = "TCGA_GBM_LGG_Mutations_all.csv"
-df = pd.read_csv(file_path)
+file_path = "TCGA_GBM_LGG_Mutations_all.xlsx"
+df = pd.read_excel(file_path)
 
 df['Age_at_diagnosis'] = pd.to_numeric(df['Age_at_diagnosis'], errors='coerce') / 365
 
 mutation_cols = ['IDH1', 'TP53', 'ATRX', 'EGFR', 'PTEN']
+
+# ===================== EXPLORATORY DATA ANALYSIS =====================
 
 grade_counts = df['Grade'].value_counts()
 plt.figure(figsize=(6,4))
@@ -69,7 +71,7 @@ plt.show()
 
 tp53_counts = df['TP53'].value_counts()
 plt.figure(figsize=(6,6))
-plt.pie(tp53_counts, labels=['Not Mutated','Mutated'], autopct='%1.1f%%')
+plt.pie(tp53_counts, labels=tp53_counts.index, autopct='%1.1f%%')
 plt.title('TP53 Mutation Status')
 plt.show()
 
@@ -105,8 +107,22 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
+# ===================== DATA PREPROCESSING =====================
+
+for col in mutation_cols:
+    df[col] = (
+        df[col]
+        .astype(str)
+        .str.lower()
+        .apply(lambda x: 1 if 'mut' in x else 0)
+    )
+
 features = ['Age_at_diagnosis','IDH1','TP53','ATRX','EGFR','PTEN']
 df_ml = df[features + ['Grade']].dropna()
+
+print("Total samples used for ML:", df_ml.shape[0])
+
+# ===================== TRAIN TEST SPLIT =====================
 
 X = df_ml[features]
 y = df_ml['Grade']
@@ -119,18 +135,25 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-lr = LogisticRegression()
+# ===================== LOGISTIC REGRESSION =====================
+
+lr = LogisticRegression(max_iter=1000)
 lr.fit(X_train, y_train)
 y_pred_lr = lr.predict(X_test)
 
-print("Logistic Regression Accuracy:", accuracy_score(y_test, y_pred_lr))
+print("\nLogistic Regression Results")
+print("Accuracy:", accuracy_score(y_test, y_pred_lr))
 print(confusion_matrix(y_test, y_pred_lr))
 print(classification_report(y_test, y_pred_lr))
+
+# ===================== KNN CLASSIFIER =====================
 
 knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train, y_train)
 y_pred_knn = knn.predict(X_test)
 
-print("KNN Accuracy:", accuracy_score(y_test, y_pred_knn))
+print("\nKNN Results")
+print("Accuracy:", accuracy_score(y_test, y_pred_knn))
 print(confusion_matrix(y_test, y_pred_knn))
 print(classification_report(y_test, y_pred_knn))
+
